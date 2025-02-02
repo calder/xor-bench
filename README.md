@@ -6,12 +6,9 @@
 
 ## Usage
 
-Run a benchmark:
+Run benchmarks:
 ```sh
-make naive
-```
-
-Run a benchmark with architecture-specific extensions:
-```sh
-make ARCH=haswell naive
+make naive-cc
+make naive-rs
+make functional-rs
 ```
