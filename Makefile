@@ -1,7 +1,3 @@
-.PHONY: functional-rs
-functional-rs: functional.rs
-	rustc -C opt-level=3 -C target-feature=+avx2,+fma -o a.out functional.rs
-
 .PHONY: gbench-cc
 gbench-cc: gbench.cc
 	clang++ gbench.cc -O2 -march=haswell -lbenchmark
@@ -13,6 +9,14 @@ naive-cc: naive.cc
 .PHONY: naive-rs
 naive-rs: naive.rs
 	rustc -C opt-level=3 -C target-feature=+avx2,+fma -o a.out naive.rs
+
+.PHONY: map-rs
+map-rs: map.rs
+	rustc -C opt-level=3 -C target-feature=+avx2,+fma -o a.out map.rs
+
+.PHONY: fold-rs
+fold-rs: fold.rs
+	rustc -C opt-level=3 -C target-feature=+avx2,+fma -o a.out fold.rs
 
 .PHONY: fast-rs
 fast-rs: fast.rs
