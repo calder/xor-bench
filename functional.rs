@@ -9,7 +9,7 @@ fn dot(a: &[f32], b: &[f32]) -> f32 {
 
 fn main() {
     const SAMPLES: usize = 10;
-    const ITERS: usize = 1000;
+    const ITERS: usize = 10000;
     const LEN: usize = 100000;
 
     let a = [0.0; LEN];
@@ -21,6 +21,6 @@ fn main() {
             black_box(dot(black_box(&a), black_box(&b)));
         }
         let time_us = 1e6 * start.elapsed().unwrap().as_secs_f32() / ITERS as f32;
-        println!("{:4.2} us", time_us);
+        println!("{:8.2} us", time_us);
     }
 }
