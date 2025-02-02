@@ -18,6 +18,10 @@ map-rs: map.rs
 fold-rs: fold.rs
 	rustc -C opt-level=3 -C target-feature=+avx2,+fma -o a.out fold.rs
 
+.PHONY: algebraic-rs
+algebraic-rs: algebraic.rs
+	~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc -C opt-level=3 -C target-feature=+avx2,+fma -o a.out algebraic.rs
+
 .PHONY: fast-rs
 fast-rs: fast.rs
 	~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc -C opt-level=3 -C target-feature=+avx2,+fma -o a.out fast.rs
