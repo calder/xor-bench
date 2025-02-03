@@ -9,15 +9,31 @@ float dot(float *a, float *b, size_t len) {
     return sum;
 }
 
-void BM_dot(benchmark::State& state) {
-    constexpr size_t LEN = 100000;
-    float a[LEN] = {};
-    float b[LEN] = {};
-
+void BM_dot_4k(benchmark::State& state) {
+    alignas(32) float a[4000] = {};
+    alignas(32) float b[4000] = {};
     for (auto _ : state) {
-        benchmark::DoNotOptimize(dot(a, b, LEN));
+        benchmark::DoNotOptimize(dot(a, b, 4000));
     }
 }
 
-BENCHMARK(BM_dot);
+void BM_dot_8k(benchmark::State& state) {
+    alignas(32) float a[8000] = {};
+    alignas(32) float b[8000] = {};
+    for (auto _ : state) {
+        benchmark::DoNotOptimize(dot(a, b, 8000));
+    }
+}
+
+void BM_dot_100k(benchmark::State& state) {
+    alignas(32) float a[100000] = {};
+    alignas(32) float b[100000] = {};
+    for (auto _ : state) {
+        benchmark::DoNotOptimize(dot(a, b, 100000));
+    }
+}
+
+BENCHMARK(BM_dot_4k);
+BENCHMARK(BM_dot_8k);
+BENCHMARK(BM_dot_100k);
 BENCHMARK_MAIN();

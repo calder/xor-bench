@@ -8,17 +8,9 @@ RUSTC_PATCHED := ~/Source/rust/build/x86_64-unknown-linux-gnu/stage2/bin/rustc
 gbench-cc: gbench.cc
 	$(CC) gbench.cc -O2 -march=haswell -lbenchmark
 
-.PHONY: gbench-global-cc
-gbench-global-cc: gbench-global.cc
-	$(CC) gbench-global.cc -O2 -march=haswell -lbenchmark
-
 .PHONY: naive-cc
 naive-cc: naive.cc
 	$(CC) naive.cc -O2 -march=haswell
-
-.PHONY: naive-global-cc
-naive-global-cc: naive-global.cc
-	$(CC) naive-global.cc -O2 -march=haswell
 
 .PHONY: naive-rs
 naive-rs: naive.rs
