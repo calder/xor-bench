@@ -16,6 +16,10 @@ naive-cc: naive.cc
 naive-rs: naive.rs
 	$(RUSTC) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out naive.rs
 
+.PHONY: mul-add-rs
+mul-add-rs: mul_add.rs
+	$(RUSTC) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out mul_add.rs
+
 .PHONY: map-rs
 map-rs: map.rs
 	$(RUSTC) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out map.rs
