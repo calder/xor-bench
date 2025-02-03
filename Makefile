@@ -10,11 +10,19 @@ gbench-cc: gbench.cc
 
 .PHONY: naive-cc
 naive-cc: naive.cc
-	$(CC) naive.cc -O2 -march=haswell
+	$(CC) naive.cc -O2 -march=haswell -DLEN=100000
+
+.PHONY: naive-4k-cc
+naive-4k-cc: naive.cc
+	$(CC) naive.cc -O2 -march=haswell -DLEN=4000
 
 .PHONY: naive-rs
 naive-rs: naive.rs
 	$(RUSTC) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out naive.rs
+
+.PHONY: naive-4k-rs
+naive-4k-rs: naive-4k.rs
+	$(RUSTC) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out naive-4k.rs
 
 .PHONY: mul-add-rs
 mul-add-rs: mul-add.rs
@@ -31,6 +39,10 @@ fold-rs: fold.rs
 .PHONY: algebraic-rs
 algebraic-rs: algebraic.rs
 	$(RUSTC_NIGHTLY) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out algebraic.rs
+
+.PHONY: algebraic-4k-rs
+algebraic-4k-rs: algebraic-4k.rs
+	$(RUSTC_NIGHTLY) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out algebraic-4k.rs
 
 .PHONY: fast-rs
 fast-rs: fast.rs

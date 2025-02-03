@@ -25,7 +25,6 @@ float dot(float *a, float *b, size_t len) {
 int main() {
     constexpr size_t SAMPLES = 10;
     constexpr size_t ITERS = 10000;
-    constexpr size_t LEN = 100000;
 
     alignas(32) float a[LEN] = {};
     alignas(32) float b[LEN] = {};
