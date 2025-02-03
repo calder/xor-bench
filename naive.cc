@@ -27,8 +27,8 @@ int main() {
     constexpr size_t ITERS = 10000;
     constexpr size_t LEN = 100000;
 
-    float a[LEN] = {};
-    float b[LEN] = {};
+    alignas(32) float a[LEN] = {};
+    alignas(32) float b[LEN] = {};
 
     for (size_t s = 0; s < SAMPLES; ++s) {
         auto start = std::chrono::system_clock::now();
