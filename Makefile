@@ -8,17 +8,25 @@ RUSTC_PATCHED := ~/Source/rust/build/x86_64-unknown-linux-gnu/stage2/bin/rustc
 gbench-cc: gbench.cc
 	$(CC) gbench.cc -O2 -march=haswell -lbenchmark
 
+.PHONY: gbench-global-cc
+gbench-global-cc: gbench-global.cc
+	$(CC) gbench-global.cc -O2 -march=haswell -lbenchmark
+
 .PHONY: naive-cc
 naive-cc: naive.cc
 	$(CC) naive.cc -O2 -march=haswell
+
+.PHONY: naive-global-cc
+naive-global-cc: naive-global.cc
+	$(CC) naive-global.cc -O2 -march=haswell
 
 .PHONY: naive-rs
 naive-rs: naive.rs
 	$(RUSTC) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out naive.rs
 
 .PHONY: mul-add-rs
-mul-add-rs: mul_add.rs
-	$(RUSTC) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out mul_add.rs
+mul-add-rs: mul-add.rs
+	$(RUSTC) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out mul-add.rs
 
 .PHONY: map-rs
 map-rs: map.rs
@@ -37,8 +45,8 @@ fast-rs: fast.rs
 	$(RUSTC_NIGHTLY) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out fast.rs
 
 .PHONY: algebraic-stable-rs
-algebraic-stable-rs: algebraic_stable.rs
-	$(RUSTC_PATCHED) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out algebraic_stable.rs
+algebraic-stable-rs: algebraic-stable.rs
+	$(RUSTC_PATCHED) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out algebraic-stable.rs
 
 .PHONE: profile
 profile:
