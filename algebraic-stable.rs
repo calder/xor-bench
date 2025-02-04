@@ -10,7 +10,7 @@ fn dot(a: &[f32], b: &[f32]) -> f32 {
 
     let mut sum: f32 = 0.0;
     for i in 0..a.len() {
-        sum = sum.add_algebraic(a[i].mul_algebraic(b[i]));
+        sum = sum.algebraic_add(a[i].algebraic_mul(b[i]));
     }
 
     sum
