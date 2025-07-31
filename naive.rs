@@ -15,7 +15,7 @@ fn dot(a: &[f32], b: &[f32]) -> f32 {
 fn main() {
     const SAMPLES: usize = 10;
     const ITERS: usize = 10000;
-    const LEN: usize = 100000;
+    const LEN: usize = 4096;
 
     let a = [0.0; LEN];
     let b = [0.0; LEN];
