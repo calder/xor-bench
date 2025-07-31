@@ -1,4 +1,5 @@
 #include <chrono>
+#include <cstdint>
 #include <cstdio>
 #include <type_traits>
 
@@ -13,28 +14,29 @@ void black_box(T &&value) noexcept {
     }
 }
 
-float dot(float *a, float *b, size_t len) {
-    #pragma clang fp reassociate(on)
-    float sum = 0.0;
+void vxor(uint32_t *a, uint32_t *b, uint32_t *out, size_t len) {
     for (size_t i = 0; i < len; ++i) {
-        sum += a[i] * b[i];
+        out[i] = a[i] ^ b[i];
     }
-    return sum;
 }
 
 int main() {
     constexpr size_t SAMPLES = 10;
     constexpr size_t ITERS = 10000;
 
-    alignas(32) float a[LEN] = {};
-    alignas(32) float b[LEN] = {};
+    alignas(32) uint32_t a[4096] = {};
+    alignas(32) uint32_t b[4096] = {};
+    alignas(32) uint32_t c[4096] = {};
 
     for (size_t s = 0; s < SAMPLES; ++s) {
         auto start = std::chrono::system_clock::now();
         for (size_t i = 0; i < ITERS; ++i) {
-            black_box(dot(a, b, LEN));
+            vxor(a, b, c, 4096);
         }
         float time_us = (std::chrono::system_clock::now() - start) / 1ns / 1e3 / ITERS;
+        for (size_t i = 0; i < ITERS; ++i) {
+            black_box(c[i]);
+        }
         printf("%8.2f us\n", time_us);
     }
 }
