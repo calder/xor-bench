@@ -1,2 +1,7 @@
 *.out
 perf.data*
+
+
+# Added by cargo
+
+/target

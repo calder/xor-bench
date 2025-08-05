@@ -1,0 +1,8 @@
+[package]
+name = "xor-bench"
+version = "0.1.0"
+edition = "2024"
+publish = ["artifactory"]
+
+[dependencies]
+bitvec = { version = "*" }

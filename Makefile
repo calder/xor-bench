@@ -9,8 +9,9 @@ naive-cc: naive.cc
 	$(CC) naive.cc -O2 -march=haswell
 
 .PHONY: naive-rs
-naive-rs: naive.rs
-	$(RUSTC) -C opt-level=3 -C target-feature=+avx2,+fma -o a.out naive.rs
+naive-rs: src/main.rs
+	cargo build --release
+	cp target/release/xor-bench a.out
 
 .PHONE: profile
 profile:
