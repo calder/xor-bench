@@ -4,12 +4,16 @@ use std::time::SystemTime;
 
 use bitvec::prelude::*;
 
-fn bitvec_xor(a: &BitSlice, b: &BitSlice) -> BitVec {
+fn bitvec_xor1(a: &BitSlice, b: &BitSlice) -> BitVec {
     assert_eq!(a.len(), b.len());
-    let mut out = a.to_bitvec();
-    out.bitxor_assign(b);
+    let mut c = a.to_bitvec();
+    c.bitxor_assign(b);
+    c
+}
 
-    out
+fn bitvec_xor2(a: &BitSlice, b: &BitSlice, c: &mut BitSlice) {
+    assert_eq!(a.len(), b.len());
+    c.bitxor_assign(b);
 }
 
 fn main() {
@@ -19,13 +23,25 @@ fn main() {
 
     let a = bitvec![0; LEN];
     let b = bitvec![0; LEN];
+    let mut c = bitvec![0; LEN];
 
+    println!("bitvec_xor1:");
     for _ in 0..SAMPLES {
         let start = SystemTime::now();
         for _ in 0..ITERS {
-            black_box(bitvec_xor(black_box(&a), black_box(&b)));
+            black_box(bitvec_xor1(black_box(&a), black_box(&b)));
         }
         let time_us = 1e6 * start.elapsed().unwrap().as_secs_f32() / ITERS as f32;
-        println!("bitvec: {:8.2} us", time_us);
+        println!("    {:8.2} us", time_us);
+    }
+
+    println!("bitvec_xor2:");
+    for _ in 0..SAMPLES {
+        let start = SystemTime::now();
+        for _ in 0..ITERS {
+            black_box(bitvec_xor2(black_box(&a), black_box(&b), black_box(&mut c)));
+        }
+        let time_us = 1e6 * start.elapsed().unwrap().as_secs_f32() / ITERS as f32;
+        println!("    {:8.2} us", time_us);
     }
 }
